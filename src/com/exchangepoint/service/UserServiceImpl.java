@@ -95,6 +95,7 @@ import com.exchangepoint.util.Validator;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class UserServiceImpl implements UserService {
@@ -147,6 +148,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void exchangeAccount(ExchangeRate exchangeRate, double amount) {
         // Реализация обмена валют
+    }
+
+    @Override
+    public void saveUser(User user) {
+
+    }
+
+    @Override
+    public Optional<User> findById(long id) {
+        return Optional.empty();
     }
 
     @Override

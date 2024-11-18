@@ -16,6 +16,8 @@ import com.exchangepoint.model.ExchangeRate;
 import com.exchangepoint.model.User;
 import com.exchangepoint.exception.ValidationException;
 
+import java.util.Optional;
+
 public interface UserService {
     void register(User user) throws ValidationException;
 
@@ -29,6 +31,8 @@ public interface UserService {
 
     void exchangeAccount(ExchangeRate exchangeRate, double amount);
 
+    void saveUser(User user);
+    Optional<User> findById(long id);
 
 
 
