@@ -1,10 +1,6 @@
 package com.exchangepoint.model;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
+
 /*
 
  */
@@ -26,7 +22,7 @@ public class Account {
         this.userId = userId;
     }
 
-    // Геттеры и сеттеры
+
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
 

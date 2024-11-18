@@ -2,19 +2,15 @@
 package com.exchangepoint.test;
 
 */
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- *//*
 
-*/
+
+
 /*
 
- *//*
+ */
 
 
-
+/*
 import com.exchangepoint.service.UserService;
 import com.exchangepoint.service.impl.UserServiceImpl;
 import com.exchangepoint.repository.UserRepository;
