@@ -1,11 +1,5 @@
 package com.exchangepoint.view;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
-
 import com.exchangepoint.model.User;
 import com.exchangepoint.model.Currency;
 import com.exchangepoint.service.AdminService;
@@ -14,8 +8,8 @@ import com.exchangepoint.exception.UserNotFoundException;
 import java.util.Scanner;
 
 public class AdminMenu {
-    private AdminService adminService;
-    private Scanner scanner;
+    private final AdminService adminService;
+    private final Scanner scanner;
 
     public AdminMenu(AdminService adminService) {
         this.adminService = adminService;

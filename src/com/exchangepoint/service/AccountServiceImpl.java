@@ -1,10 +1,14 @@
 package com.exchangepoint.service;
 
+import com.exchangepoint.exception.AccountException;
 import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Currency;
+import com.exchangepoint.model.User;
 import com.exchangepoint.repository.AccountRepository;
 import com.exchangepoint.exception.AccountNotFoundException;
 import com.exchangepoint.exception.InsufficientFundsException;
+
+import java.util.List;
 
 
 public class AccountServiceImpl implements AccountService {
@@ -18,8 +22,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void openAccount(long userId, Currency currency) {
-        Account account = new Account(0, currency, 0.0, userId);
+    public void openAccount(Long userId, Currency currency) {
+        Account account = new Account(currency, userId);
+        List<Account> accounts = accountRepository.findByUserId(userId).get();
+        accounts.stream()
+                .filter(ac -> ac.getCurrency().equals(currency)).findFirst()
+                .ifPresent(ac -> {
+                    throw new AccountException("Аккаунт с такой валютой уже существует");
+        });
         accountRepository.save(account);
     }
 
@@ -32,12 +42,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deposit(long accountId, double amount) throws AccountNotFoundException {
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new AccountNotFoundException("Счет не найден."));
-        account.setBalance(account.getBalance() + amount);
-        accountRepository.save(account);
-        transactionService.recordDeposit(account, amount);
+    public void deposit(User user, double amount, String currencyStr) throws AccountNotFoundException {
+        try {
+            Long userId = user.getId();
+            List<Account> accounts = accountRepository.findByUserId(userId).get();
+            Currency currency = Currency.valueOf(currencyStr.toUpperCase());
+            Account account = accounts.stream()
+                    .filter(ac -> ac.getCurrency().equals(currency))
+                    .findFirst()
+                    .orElseThrow(() -> new AccountNotFoundException("Счет не найден."));
+
+         //   if (!account.getCurrency().equals(currency)) {
+          //      throw new AccountException("Вы ввели несуществующую валюту");
+           // }
+            account.setBalance(account.getBalance() + amount);
+            accountRepository.save(account);
+            transactionService.recordDeposit(account, amount);
+        } catch (AccountException e) {
+            throw new AccountNotFoundException(e.getMessage());
+        }
     }
 
     @Override
@@ -50,5 +73,14 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(account.getBalance() - amount);
         accountRepository.save(account);
         transactionService.recordWithdrawal(account, amount);
+    }
+
+    @Override
+    public Account getAccountByUserId(long userId, Currency currency) {
+        List<Account> accounts = accountRepository.findByUserId(userId).get();
+        return accounts.stream()
+                .filter(account -> account.getCurrency().equals(currency))
+                .findFirst()
+                .orElse(null);
     }
 }

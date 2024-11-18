@@ -1,9 +1,6 @@
 package com.exchangepoint.model;
 
 
-/*
-
- */
 
 
 public enum Currency {

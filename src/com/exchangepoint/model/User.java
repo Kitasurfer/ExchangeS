@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
 public class User {
     private Long id;             // Уникальный идентификатор пользователя
     private String name;         // Имя пользователя
@@ -22,16 +17,6 @@ public class User {
     }
 
     public User(Long id, String name, String email, String password, Set<Role> roles, List<Account> accounts, boolean isBlocked) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.accounts = accounts;
-        this.isBlocked = isBlocked;
-    }
-
-    public User(long id, String name, String email, String password, Set<Role> roles, List<Account> accounts, boolean isBlocked) {
         this.id = id;
         this.name = name;
         this.email = email;

@@ -2,23 +2,30 @@ package com.exchangepoint.model;
 
 import java.util.*;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
 public class Db {
 
     private Map<String, Rate> rateMap;
     private Map<Long, User> users;
     private Map<Long, List<Transaction>> userTransactions;
+    private List<Account> accounts;
     private Long userId = 1L;
     private Long transactionId = 1L;
+    private Long accountId = 1L;
 
     public Db() {
         this.rateMap = initRateMap();
         this.users = initUsers();
+        this.accounts = initAccounts();
         this.userTransactions = new HashMap<>();
+    }
+
+    private List<Account> initAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        Account account = new Account(Currency.EUR, 2L);
+        account.setId(accountId);
+        accountId++;
+        accounts.add(account);
+        return accounts;
     }
 
     private Map<Long, User> initUsers() {
@@ -30,6 +37,15 @@ public class Db {
                 "adminpassword1", roles,
                 new ArrayList<>(), false);
         map.put(user.getId(), user);
+
+        // Создаем тестового пользователя testuser@example.com  testpassword
+        Set<Role> testRoles = new HashSet<>();
+        testRoles.add(Role.USER); // Предполагается, что есть роль USER
+        User testUser = new User(
+                userId++, "testuser", "testuser@example.com",
+                "testpassword", testRoles,
+                new ArrayList<>(), false);
+        map.put(testUser.getId(), testUser);
         return map;
     }
 
@@ -121,5 +137,21 @@ public class Db {
 
     public void setTransactionId(Long transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

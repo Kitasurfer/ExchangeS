@@ -1,10 +1,5 @@
 package com.exchangepoint.repository;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
 import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Db;
 
@@ -12,10 +7,7 @@ import java.util.*;
 
 public class AccountRepositoryImpl implements AccountRepository {
 
-    private Db db;
-    private Map<Long, Account> accountsById = new HashMap<>();
-    private Map<Long, List<Account>> userAccounts = new HashMap<>();
-    private long accountIdSequence = 1;
+    private final Db db;
 
     public AccountRepositoryImpl(Db db) {
         this.db = db;
@@ -23,31 +15,34 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public void save(Account account) {
-        if (account.getId() == 0) {
-            account.setId(accountIdSequence++);
+        if (account.getId() == null) {
+            Long accountId = db.getAccountId();
+            account.setId(accountId);
+            db.getAccounts().add(account);
+        } else {
+            db.getAccounts().stream()
+                    .filter(ac -> ac.getId().equals(account.getId()))
+                    .findFirst().ifPresent(ac -> {
+                db.getAccounts().remove(ac);
+                db.getAccounts().add(account);
+            });
         }
-        accountsById.put(account.getId(), account);
-        userAccounts.computeIfAbsent(account.getUserId(), k -> new ArrayList<>()).add(account);
     }
 
     @Override
     public Optional<Account> findById(long id) {
-        return Optional.ofNullable(accountsById.get(id));
+        return db.getAccounts().stream().filter(ac -> ac.getId().equals(id)).findFirst();
     }
 
     @Override
-    public List<Account> findByUserId(long userId) {
-        return userAccounts.getOrDefault(userId, new ArrayList<>());
+    public Optional<List<Account>> findByUserId(Long userId) {
+        return Optional.of(db.getAccounts().stream()
+                .filter(ac -> ac.getUserId().equals(userId))
+                .toList());
     }
 
     @Override
-    public void delete(long id) {
-        Account account = accountsById.remove(id);
-        if (account != null) {
-            List<Account> accounts = userAccounts.get(account.getUserId());
-            if (accounts != null) {
-                accounts.remove(account);
-            }
-        }
+    public void delete(Long id) {
+        db.getAccounts().removeIf(ac -> ac.getId().equals(id));
     }
 }
