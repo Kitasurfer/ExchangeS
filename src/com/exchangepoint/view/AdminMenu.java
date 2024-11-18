@@ -5,10 +5,6 @@ package com.exchangepoint.view;
  * Author: Bogdan Fesenko
  * Date: 15-11-2024
  */
-/*
-
- */
-
 
 import com.exchangepoint.model.User;
 import com.exchangepoint.model.Currency;
@@ -49,7 +45,7 @@ public class AdminMenu {
                     unblockUser();
                     break;
                 case "4":
-                    // Реализация просмотра всех пользователей
+                    getAllUsers();
                     break;
                 case "5":
                     return;
@@ -57,6 +53,10 @@ public class AdminMenu {
                     System.out.println("Неверный выбор. Попробуйте снова.");
             }
         }
+    }
+
+    private void getAllUsers() {
+        adminService.getUsers().forEach(System.out::println);
     }
 
     private void setExchangeRate() {

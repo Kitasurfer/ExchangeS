@@ -1,43 +1,6 @@
-/*
 package com.exchangepoint.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-*/
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- *//*
-
-*/
-/*
-
- *//*
-
-public class Db {
-
-    private Map<String, Rate> rateMap;
-
-    public Db() {
-        this.rateMap = initRateMap();
-
-    }
-
-    private Map<String,Rate> initRateMap() {
-        Map<String,Rate> map = new HashMap<>();
-        // TODO заполнить рейты валюты
-        return map;
-     }
-
-
-}
-*/
-package com.exchangepoint.model;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Group: 52-1, "AIT Hi-tech team" GMBH
@@ -47,9 +10,27 @@ import java.util.Map;
 public class Db {
 
     private Map<String, Rate> rateMap;
+    private Map<Long, User> users;
+    private Map<Long, List<Transaction>> userTransactions;
+    private Long userId = 1L;
+    private Long transactionId = 1L;
 
     public Db() {
         this.rateMap = initRateMap();
+        this.users = initUsers();
+        this.userTransactions = new HashMap<>();
+    }
+
+    private Map<Long, User> initUsers() {
+        Map<Long, User> map = new HashMap<>();
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.ADMIN);
+        User user = new User(
+                userId++, "admin1", "admin1@example.com",
+                "adminpassword1", roles,
+                new ArrayList<>(), false);
+        map.put(user.getId(), user);
+        return map;
     }
 
     private Map<String, Rate> initRateMap() {
@@ -100,5 +81,45 @@ public class Db {
 
     public Map<String, Rate> getAllRates() {
         return rateMap;
+    }
+
+    public Map<String, Rate> getRateMap() {
+        return rateMap;
+    }
+
+    public void setRateMap(Map<String, Rate> rateMap) {
+        this.rateMap = rateMap;
+    }
+
+    public Map<Long, User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Map<Long, User> users) {
+        this.users = users;
+    }
+
+    public Map<Long, List<Transaction>> getUserTransactions() {
+        return userTransactions;
+    }
+
+    public void setUserTransactions(Map<Long, List<Transaction>> userTransactions) {
+        this.userTransactions = userTransactions;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 }

@@ -5,19 +5,21 @@ package com.exchangepoint.repository;
  * Author: Bogdan Fesenko
  * Date: 15-11-2024
  */
-/*
-
- */
-
 import com.exchangepoint.model.Account;
+import com.exchangepoint.model.Db;
 
 import java.util.*;
 
 public class AccountRepositoryImpl implements AccountRepository {
 
+    private Db db;
     private Map<Long, Account> accountsById = new HashMap<>();
     private Map<Long, List<Account>> userAccounts = new HashMap<>();
     private long accountIdSequence = 1;
+
+    public AccountRepositoryImpl(Db db) {
+        this.db = db;
+    }
 
     @Override
     public void save(Account account) {
