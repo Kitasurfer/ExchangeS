@@ -5,16 +5,13 @@ import com.exchangepoint.model.Role;
 import com.exchangepoint.service.UserService;
 import com.exchangepoint.exception.ValidationException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class MainMenu {
-    private UserService userService;
-    private UserMenu userMenu;
-    private AdminMenu adminMenu;
-    private Scanner scanner;
+    private final UserService userService;
+    private final UserMenu userMenu;
+    private final AdminMenu adminMenu;
+    private final Scanner scanner;
 
     public MainMenu(UserService userService, UserMenu userMenu, AdminMenu adminMenu) {
         this.userService = userService;
