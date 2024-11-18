@@ -5,15 +5,10 @@ package com.exchangepoint.model;
  * Author: Bogdan Fesenko
  * Date: 15-11-2024
  */
-/*
-
- */
-
-
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private long id;                   // Уникальный идентификатор операции
+    private Long id;                   // Уникальный идентификатор операции
     private LocalDateTime timestamp;   // Дата и время операции
     private String type;               // Тип операции ("Пополнение", "Снятие", "Обмен")
     private Currency currency;         // Валюта операции
@@ -24,7 +19,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(long id, LocalDateTime timestamp, String type, Currency currency, double amount, double balanceAfter, long userId) {
+    public Transaction(Long id, LocalDateTime timestamp, String type, Currency currency, double amount, double balanceAfter, long userId) {
         this.id = id;
         this.timestamp = timestamp;
         this.type = type;
@@ -34,9 +29,18 @@ public class Transaction {
         this.userId = userId;
     }
 
+    public Transaction(LocalDateTime timestamp, String type, Currency currency, double amount, double balanceAfter, long userId) {
+        this.timestamp = timestamp;
+        this.type = type;
+        this.currency = currency;
+        this.amount = amount;
+        this.balanceAfter = balanceAfter;
+        this.userId = userId;
+    }
+
     // Геттеры и сеттеры
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public LocalDateTime getTimestamp() { return timestamp; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }

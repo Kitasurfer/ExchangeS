@@ -1,26 +1,18 @@
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
-/*
-
- */
-
-
 package com.exchangepoint;
 
+import com.exchangepoint.model.Db;
 import com.exchangepoint.repository.*;
 import com.exchangepoint.service.*;
 import com.exchangepoint.view.*;
 
 public class Main {
     public static void main(String[] args) {
+        Db db = new Db();
         // Создание репозиториев
-        UserRepository userRepository = new UserRepositoryImpl();
-        AccountRepository accountRepository = new AccountRepositoryImpl();
-        ExchangeRateRepository exchangeRateRepository = new ExchangeRateRepositoryImpl();
-        TransactionRepository transactionRepository = new TransactionRepositoryImpl();
+        UserRepository userRepository = new UserRepositoryImpl(db);
+        AccountRepository accountRepository = new AccountRepositoryImpl(db);
+        ExchangeRateRepository exchangeRateRepository = new ExchangeRateRepositoryImpl(db);
+        TransactionRepository transactionRepository = new TransactionRepositoryImpl(db);
 
         // Создание сервисов
         UserService userService = new UserServiceImpl(userRepository);

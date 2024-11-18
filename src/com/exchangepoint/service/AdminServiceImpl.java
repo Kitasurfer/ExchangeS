@@ -1,10 +1,18 @@
 package com.exchangepoint.service;
 
+/**
+ * Group: 52-1, "AIT Hi-tech team" GMBH
+ * Author: Bogdan Fesenko
+ * Date: 15-11-2024
+ */
+
 import com.exchangepoint.model.Currency;
 import com.exchangepoint.model.User;
 import com.exchangepoint.repository.ExchangeRateRepository;
 import com.exchangepoint.repository.UserRepository;
 import com.exchangepoint.exception.UserNotFoundException;
+
+import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
 
@@ -35,5 +43,18 @@ public class AdminServiceImpl implements AdminService {
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден."));
         user.setBlocked(false);
         userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public ExchangeRateRepository getExchangeRateRepository() {
+        return exchangeRateRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 }
