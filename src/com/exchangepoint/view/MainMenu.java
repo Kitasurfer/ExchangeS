@@ -1,15 +1,5 @@
 package com.exchangepoint.view;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
-/*
-
- */
-
-
 import com.exchangepoint.model.User;
 import com.exchangepoint.model.Role;
 import com.exchangepoint.service.UserService;

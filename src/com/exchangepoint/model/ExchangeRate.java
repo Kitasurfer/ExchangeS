@@ -24,7 +24,7 @@ public class ExchangeRate {
         this.rate = rate;
     }
 
-    // Геттеры и сеттеры
+
     public Currency getCurrencyFrom() { return currencyFrom; }
     public void setCurrencyFrom(Currency currencyFrom) { this.currencyFrom = currencyFrom; }
 

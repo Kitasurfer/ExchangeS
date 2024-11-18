@@ -1,16 +1,5 @@
 package com.exchangepoint.service;
 
-/**
- * Group: 52-1, "AIT Hi-tech team" GMBH
- * Author: Bogdan Fesenko
- * Date: 15-11-2024
- */
-/*
-
- */
-
-
-
 import com.exchangepoint.model.Currency;
 import com.exchangepoint.model.User;
 import com.exchangepoint.repository.ExchangeRateRepository;
