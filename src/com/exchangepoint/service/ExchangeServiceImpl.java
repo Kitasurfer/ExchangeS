@@ -1,20 +1,25 @@
 package com.exchangepoint.service;
 
-import com.exchangepoint.model.Account;
+import com.exchangepoint.exception.CurrencyExchangeException;
 import com.exchangepoint.model.Currency;
+import com.exchangepoint.model.Rate;
 import com.exchangepoint.repository.AccountRepository;
 import com.exchangepoint.repository.ExchangeRateRepository;
-import com.exchangepoint.exception.AccountNotFoundException;
-import com.exchangepoint.exception.CurrencyExchangeException;
-import com.exchangepoint.exception.InsufficientFundsException;
-
 
 public class ExchangeServiceImpl implements ExchangeService {
 
-    private final AccountRepository accountRepository;
     private final ExchangeRateRepository exchangeRateRepository;
+    private final AccountRepository accountRepository;
     private final TransactionService transactionService;
 
+    // Конструктор для репозитория обмена валют (основной)
+    public ExchangeServiceImpl(ExchangeRateRepository exchangeRateRepository) {
+        this.exchangeRateRepository = exchangeRateRepository;
+        this.accountRepository = null; // Если не используется
+        this.transactionService = null; // Если не используется
+    }
+
+    // Конструктор с accountRepository и transactionService
     public ExchangeServiceImpl(AccountRepository accountRepository, ExchangeRateRepository exchangeRateRepository, TransactionService transactionService) {
         this.accountRepository = accountRepository;
         this.exchangeRateRepository = exchangeRateRepository;
@@ -22,26 +27,20 @@ public class ExchangeServiceImpl implements ExchangeService {
     }
 
     @Override
-    public void exchange(long fromAccountId, long toAccountId, double amount)
-            throws AccountNotFoundException, CurrencyExchangeException, InsufficientFundsException {
-        Account fromAccount = accountRepository.findById(fromAccountId)
-                .orElseThrow(() -> new AccountNotFoundException("Счет списания не найден."));
-        Account toAccount = accountRepository.findById(toAccountId)
-                .orElseThrow(() -> new AccountNotFoundException("Счет зачисления не найден."));
-        if (fromAccount.getBalance() < amount) {
-            throw new InsufficientFundsException("Недостаточно средств для обмена.");
+    public double convertDirect(double amount, Currency from, Currency to) throws CurrencyExchangeException {
+        Rate rate = exchangeRateRepository.getRate(from, to);
+        if (rate == null) {
+            throw new CurrencyExchangeException("Курс обмена не найден для " + from + " -> " + to);
         }
-        Currency fromCurrency = fromAccount.getCurrency();
-        Currency toCurrency = toAccount.getCurrency();
-        double rate = exchangeRateRepository.getRate(fromCurrency, toCurrency);
-        if (rate == 0.0) {
-            throw new CurrencyExchangeException("Курс обмена не найден.");
+        return amount * rate.getRate(); // Умножаем сумму на курс
+    }
+
+    @Override
+    public double convertReverse(double amount, Currency to, Currency from) throws CurrencyExchangeException {
+        Rate rate = exchangeRateRepository.getRate(from, to);
+        if (rate == null) {
+            throw new CurrencyExchangeException("Курс обмена не найден для " + from + " -> " + to);
         }
-        double convertedAmount = amount * rate;
-        fromAccount.setBalance(fromAccount.getBalance() - amount);
-        toAccount.setBalance(toAccount.getBalance() + convertedAmount);
-        accountRepository.save(fromAccount);
-        accountRepository.save(toAccount);
-        transactionService.recordExchange(fromAccount, toAccount, amount, convertedAmount, rate);
+        return amount / rate.getRate(); // Делим сумму на курс
     }
 }
