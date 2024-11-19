@@ -10,4 +10,10 @@ public interface AccountRepository {
     Optional<Account> findById(long id); // Найти аккаунт по ID
     Optional<List<Account>> findByUserId(Long userId); // Найти аккаунты пользователя
     void delete(Long id); // Удалить аккаунт по ID
+
+
+
 }
+
+
+

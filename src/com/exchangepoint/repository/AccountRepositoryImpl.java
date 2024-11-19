@@ -4,6 +4,7 @@ import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Db;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AccountRepositoryImpl implements AccountRepository {
 

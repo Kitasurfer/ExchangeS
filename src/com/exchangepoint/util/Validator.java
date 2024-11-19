@@ -6,7 +6,7 @@ import com.exchangepoint.exception.ValidationException;
 public class Validator {
 
     // Метод для валидации email
-    public void validateEmail(String email) throws ValidationException {
+    public static void validateEmail(String email) throws ValidationException {
         // 1. Должна присутствовать одна и только одна собака (@)
         int indexAt = email.indexOf('@');
         if (indexAt == -1 || indexAt != email.lastIndexOf('@')) {
@@ -52,7 +52,7 @@ public class Validator {
     }
 
     // Метод для валидации пароля
-    public void validatePassword(String password) throws ValidationException {
+    public static void validatePassword(String password) throws ValidationException {
         // 1. Пароль должен быть не менее 8 символов
         if (password.length() < 8) {
             throw new ValidationException("Пароль должен быть не менее 8 символов.");
@@ -85,6 +85,7 @@ public class Validator {
 
         // 5. Если пароль не удовлетворяет хотя бы одному требованию, выбрасываем исключение
         StringBuilder errorMessage = new StringBuilder("Пароль должен содержать:");
+        int startLen = errorMessage.length();
 
         if (!hasLetter) errorMessage.append(" буквы");
         if (!hasDigit) errorMessage.append(" цифры");
@@ -92,7 +93,7 @@ public class Validator {
         if (!hasLowerCase) errorMessage.append(" строчные буквы");
         if (!hasSpecialSymbol) errorMessage.append(" специальные символы (!%$@&*()[].,-)");
 
-        if (errorMessage.length() > 19) { // Если ошибка была добавлена
+        if (errorMessage.length() > startLen) { // Если ошибка была добавлена
             throw new ValidationException(errorMessage.toString());
         }
     }

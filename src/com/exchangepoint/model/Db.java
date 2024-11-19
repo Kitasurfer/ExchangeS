@@ -3,7 +3,6 @@ package com.exchangepoint.model;
 import java.util.*;
 
 public class Db {
-
     private Map<String, Rate> rateMap;
     private Map<Long, User> users;
     private Map<Long, List<Transaction>> userTransactions;
@@ -22,8 +21,7 @@ public class Db {
     private List<Account> initAccounts() {
         List<Account> accounts = new ArrayList<>();
         Account account = new Account(Currency.EUR, 2L);
-        account.setId(accountId);
-        accountId++;
+        account.setId(accountId++);
         accounts.add(account);
         return accounts;
     }
@@ -32,57 +30,28 @@ public class Db {
         Map<Long, User> map = new HashMap<>();
         Set<Role> roles = new HashSet<>();
         roles.add(Role.ADMIN);
-        User user = new User(
-                userId++, "admin1", "admin1@example.com",
-                "adminpassword1", roles,
-                new ArrayList<>(), false);
+        User user = new User(userId++, "admin1", "1", "1", roles, new ArrayList<>(), false);
         map.put(user.getId(), user);
 
-        // Создаем тестового пользователя testuser@example.com  testpassword
         Set<Role> testRoles = new HashSet<>();
-        testRoles.add(Role.USER); // Предполагается, что есть роль USER
-        User testUser = new User(
-                userId++, "testuser", "testuser@example.com",
-                "testpassword", testRoles,
-                new ArrayList<>(), false);
+        testRoles.add(Role.USER);
+        User testUser = new User(userId++, "testuser", "2", "2", testRoles, new ArrayList<>(), false);
         map.put(testUser.getId(), testUser);
         return map;
     }
 
     private Map<String, Rate> initRateMap() {
         Map<String, Rate> map = new HashMap<>();
-
-        // Курсы валют актуальны на определенную дату
-        // Обязательно обновите курсы до актуальных перед использованием
-
-        // Кросс-курсы между фиатными валютами
         map.put("EUR-USD", new Rate(1.10));
         map.put("EUR-UAH", new Rate(40.00));
-        map.put("USD-EUR", new Rate(0.91));
-        map.put("USD-UAH", new Rate(36.50));
-        map.put("UAH-EUR", new Rate(0.025));
-        map.put("UAH-USD", new Rate(0.0274));
-
-        // Курсы между фиатными валютами и криптовалютами
         map.put("EUR-BTC", new Rate(0.000025));
-        map.put("BTC-EUR", new Rate(40000.0));
         map.put("EUR-ETH", new Rate(0.00035));
-        map.put("ETH-EUR", new Rate(2850.0));
-
-        map.put("USD-BTC", new Rate(0.000023));
-        map.put("BTC-USD", new Rate(43000.0));
-        map.put("USD-ETH", new Rate(0.00032));
-        map.put("ETH-USD", new Rate(3125.0));
-
-        map.put("UAH-BTC", new Rate(0.0000006));
-        map.put("BTC-UAH", new Rate(1600000.0));
-        map.put("UAH-ETH", new Rate(0.000008));
-        map.put("ETH-UAH", new Rate(125000.0));
-
-        // Курсы между криптовалютами
+        map.put("USD-EUR", new Rate(1 / 1.10));
+        map.put("UAH-EUR", new Rate(1 / 40.00));
+        map.put("BTC-EUR", new Rate(1 / 0.000025));
+        map.put("ETH-EUR", new Rate(1 / 0.00035));
         map.put("BTC-ETH", new Rate(14.0));
-        map.put("ETH-BTC", new Rate(0.0714));
-
+        map.put("ETH-BTC", new Rate(1 / 14.0));
         return map;
     }
 
@@ -154,4 +123,10 @@ public class Db {
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
+
+    public List<Transaction> getAllTransactions() {
+        return null;
+    }
 }
+
+
