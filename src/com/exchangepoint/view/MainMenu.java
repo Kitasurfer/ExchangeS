@@ -78,7 +78,7 @@ public class MainMenu {
             if (user.getRoles().contains(Role.ADMIN)) {
                 adminMenu.show(user);
             } else {
-                userMenu.show(user);
+                userMenu.show();
             }
 
         } catch (ValidationException e) {
