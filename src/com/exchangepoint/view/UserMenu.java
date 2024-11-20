@@ -153,12 +153,15 @@ public class UserMenu {
     private void viewTransactions(User user) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         System.out.println(messages.get("transaction.history"));
+        System.out.printf("%-12s %-22s %-15s %-20s %-20s %-20s%n", "ID операции",   "Тип", "Сумма", "Валюта", "Баланс после",  "Дата");
+        System.out.println("=".repeat(115));
         transactionService.getTransactions(user.getId())
                 .forEach(transaction -> {
                     String formattedDate = transaction.getTimestamp().format(formatter);
-                    System.out.printf(messages.get("transaction.details"),
+                    System.out.printf("%-12s %-22s %-15s %-20s %-20s %-20s%n",
                             transaction.getId(), transaction.getType(), transaction.getAmount(), transaction.getCurrency(), transaction.getBalanceAfter(), formattedDate);
                 });
-
     }
+
 }
+

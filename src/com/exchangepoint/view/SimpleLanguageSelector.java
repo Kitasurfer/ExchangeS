@@ -71,6 +71,10 @@ public class SimpleLanguageSelector {
         englishTexts.put("login.success", "Login successful!");
         englishTexts.put("login.error", "Login error: ");
 
+        englishTexts.put("transaction.details", "Transaction ID: %d, Type: %s, Amount: %.2f %s, Balance after: %.2f, Date: %s%n");
+
+
+
 
         // Русский
         russianTexts.put("menu.user.welcome", "Меню пользователя:");
@@ -132,6 +136,10 @@ public class SimpleLanguageSelector {
         russianTexts.put("registration.error", "Ошибка регистрации: ");
         russianTexts.put("login.success", "Вход выполнен!");
         russianTexts.put("login.error", "Ошибка входа: ");
+        russianTexts.put("transaction.details", "ID операции: %d, Тип: %s, Сумма: %.2f %s, Баланс после операции: %.2f, Дата: %s%n");
+
+
+
 
         // Немецкий
         germanTexts.put("menu.user.welcome", "Benutzermenü:");
@@ -193,6 +201,8 @@ public class SimpleLanguageSelector {
         germanTexts.put("registration.error", "Registrierungsfehler: ");
         germanTexts.put("login.success", "Anmeldung erfolgreich!");
         germanTexts.put("login.error", "Anmeldefehler: ");
+        germanTexts.put("transaction.details", "Transaktions-ID: %d, Typ: %s, Betrag: %.2f %s, Kontostand nach: %.2f, Datum: %s%n");
+
 
         // Добавление мапов в общую мапу языков
         languages.put(1, englishTexts);

@@ -85,8 +85,17 @@ public class AdminMenu {
     }
 
     private void getAllUsers() {
-        adminService.getUsers().forEach(System.out::println);
+        List<User> users = adminService.getUsers();
+        System.out.printf("%-5s %-15s %-25s %-25s %-10s %-10s%n", "ID", "Name", "Email", "Roles", "Accounts", "Blocked");
+        System.out.println("=".repeat(100));
+        users.forEach(user -> {
+            String roles = user.getRoles() != null ? user.getRoles().toString() : "No roles";
+            String accounts = user.getAccounts() != null ? user.getAccounts().toString() : "No accounts";
+            System.out.printf("%-5d %-15s %-25s %-25s %-10s %-10s%n",
+                    user.getId(), user.getName(), user.getEmail(), roles, accounts, user.isBlocked());
+        });
     }
+
 
     private void setExchangeRate() {
         System.out.print(messages.get("enter.from.currency"));
@@ -137,9 +146,13 @@ public class AdminMenu {
         String password = scanner.nextLine();
 
         User user = new User(name, email, password);
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(Set.of(Role.USER));
+        }
         adminService.addUser(user);
         System.out.println(messages.get("user.added"));
     }
+
 
     private void deleteUser() {
         System.out.print(messages.get("enter.user.id.delete"));
