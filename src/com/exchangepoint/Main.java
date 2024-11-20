@@ -20,7 +20,7 @@ public class Main {
         TransactionService transactionService = new TransactionServiceImpl(transactionRepository);
         AccountService accountService = new AccountServiceImpl(accountRepository, transactionService);
         ExchangeService exchangeService = new ExchangeServiceImpl(accountRepository, exchangeRateRepository, transactionService);
-        AdminService adminService = new AdminServiceImpl(transactionRepository, accountRepository, exchangeRateRepository, userRepository);
+        AdminService adminService = new AdminServiceImpl(transactionRepository, accountRepository, exchangeRateRepository, userRepository, db);
 
         // Создание меню
         UserMenu userMenu = new UserMenu(accountService, exchangeService, transactionService);
@@ -30,5 +30,7 @@ public class Main {
         // Запуск приложения
         mainMenu.show();
     }
+
 }
+
 

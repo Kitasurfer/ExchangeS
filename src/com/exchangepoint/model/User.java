@@ -9,7 +9,7 @@ public class User {
     private String name;         // Имя пользователя
     private String email;        // Email пользователя
     private String password;     // Пароль пользователя
-    private Set<Role> roles;           // Роль пользователя (USER или ADMIN)
+    private Set<Role> roles;     // Роли пользователя (USER или ADMIN)
     private List<Account> accounts;
     private boolean isBlocked;   // Флаг блокировки
 
@@ -34,6 +34,17 @@ public class User {
         this.isBlocked = false;
     }
 
+    // Добавляем недостающий конструктор с установкой роли пользователя
+    public User(Long id, String name, String email, String password, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.accounts = new ArrayList<>();
+        this.isBlocked = false;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -46,7 +57,9 @@ public class User {
                 '}';
     }
 
-    public Long getId() {return id;}
+    public Long getId() {
+        return id;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -104,6 +117,6 @@ public class User {
     }
 
     public boolean getRole() {
-     return false;
+        return false;
     }
 }
