@@ -1,21 +1,27 @@
 package com.exchangepoint.service;
 
-
-
+import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Currency;
-import com.exchangepoint.model.User;
-import com.exchangepoint.repository.ExchangeRateRepository;
-import com.exchangepoint.repository.UserRepository;
 import com.exchangepoint.exception.UserNotFoundException;
+import com.exchangepoint.model.Transaction;
+import com.exchangepoint.model.User;
+import com.exchangepoint.repository.AccountRepository;
+import com.exchangepoint.repository.ExchangeRateRepository;
+import com.exchangepoint.repository.TransactionRepository;
+import com.exchangepoint.repository.UserRepository;
 
 import java.util.List;
 
 public class AdminServiceImpl implements AdminService {
 
+    private final TransactionRepository transactionRepository;
+    private final AccountRepository accountRepository;
     private final ExchangeRateRepository exchangeRateRepository;
     private final UserRepository userRepository;
 
-    public AdminServiceImpl(ExchangeRateRepository exchangeRateRepository, UserRepository userRepository) {
+    public AdminServiceImpl(TransactionRepository transactionRepository, AccountRepository accountRepository, ExchangeRateRepository exchangeRateRepository, UserRepository userRepository) {
+        this.transactionRepository = transactionRepository;
+        this.accountRepository = accountRepository;
         this.exchangeRateRepository = exchangeRateRepository;
         this.userRepository = userRepository;
     }
@@ -46,11 +52,15 @@ public class AdminServiceImpl implements AdminService {
         return userRepository.findAll();
     }
 
-    public ExchangeRateRepository getExchangeRateRepository() {
-        return exchangeRateRepository;
+    @Override
+    public List<Transaction> getUserTransactions(Long userId) {
+        return transactionRepository.findByUserId(userId);
     }
 
-    public UserRepository getUserRepository() {
-        return userRepository;
+    @Override
+    public List<Account> getUserAccounts(Long userId) {
+        return accountRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Счета пользователя не найдены"));
     }
 }
+

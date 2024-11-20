@@ -134,6 +134,7 @@ public class UserMenu {
             Account fromAccount = accountService.getAccountByUserId(user.getId(), exchangeService.getFromCurrency(fromAccountId));
             Account toAccount = accountService.getAccountByUserId(user.getId(), exchangeService.getToCurrency(toAccountId));
             System.out.println("Обмен успешно выполнен.");
+            System.out.println("Комиссия за транзакцию: " + amount * 0.002 + " " + fromAccount.getCurrency());
             System.out.println("Счет для обмена: " + fromAccount);
             System.out.println("Счет для зачисления: " + toAccount);
         } catch (NumberFormatException e) {
@@ -152,6 +153,9 @@ public class UserMenu {
                         System.out.println("ID операции: " + transaction.getId() +
                                 ", Тип: " + transaction.getType() +
                                 ", Сумма: " + transaction.getAmount() + " " + transaction.getCurrency() +
+                                ", Баланс после операции: " + transaction.getBalanceAfter() +
                                 ", Дата: " + transaction.getTimestamp()));
     }
+
+
 }

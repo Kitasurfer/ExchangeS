@@ -52,8 +52,10 @@ public class ExchangeServiceImpl implements ExchangeService {
         fromAccount.setBalance(fromAccount.getBalance() - amount);
         toAccount.setBalance(toAccount.getBalance() + convertedAmount);
 
-        accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
+        accountRepository.save(fromAccount);
+        // Регистрируем транзакцию обмена
+        transactionService.recordExchange(fromAccount, toAccount, amount, convertedAmount, rate);
     }
 
     @Override

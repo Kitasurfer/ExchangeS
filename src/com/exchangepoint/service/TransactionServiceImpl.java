@@ -75,6 +75,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Iterable<Transaction> getTransactions() {
-        return null;
+        return transactionRepository.findAll();
     }
 }
