@@ -8,6 +8,7 @@ import com.exchangepoint.view.*;
 public class Main {
     public static void main(String[] args) {
         Db db = new Db();
+
         // Создание репозиториев
         UserRepository userRepository = new UserRepositoryImpl(db);
         AccountRepository accountRepository = new AccountRepositoryImpl(db);
@@ -19,7 +20,7 @@ public class Main {
         TransactionService transactionService = new TransactionServiceImpl(transactionRepository);
         AccountService accountService = new AccountServiceImpl(accountRepository, transactionService);
         ExchangeService exchangeService = new ExchangeServiceImpl(accountRepository, exchangeRateRepository, transactionService);
-        AdminService adminService = new AdminServiceImpl(exchangeRateRepository, userRepository);
+        AdminService adminService = new AdminServiceImpl(transactionRepository, accountRepository, exchangeRateRepository, userRepository);
 
         // Создание меню
         UserMenu userMenu = new UserMenu(accountService, exchangeService, transactionService);
@@ -30,3 +31,4 @@ public class Main {
         mainMenu.show();
     }
 }
+

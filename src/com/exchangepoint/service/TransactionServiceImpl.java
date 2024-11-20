@@ -1,11 +1,12 @@
 package com.exchangepoint.service;
 
 import com.exchangepoint.model.Account;
-import com.exchangepoint.model.Currency;
 import com.exchangepoint.model.Transaction;
 import com.exchangepoint.repository.TransactionRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TransactionServiceImpl implements TransactionService {
 
@@ -67,8 +68,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public List<Transaction> getTransactions(Long userId) {
+        // Возвращаем список транзакций для данного пользователя
+        return transactionRepository.findByUserId(userId);
+    }
+
+    @Override
     public Iterable<Transaction> getTransactions() {
         return transactionRepository.findAll();
     }
 }
-

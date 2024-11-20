@@ -3,7 +3,8 @@ package com.exchangepoint.repository;
 import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Db;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public class AccountRepositoryImpl implements AccountRepository {
 
@@ -18,14 +19,15 @@ public class AccountRepositoryImpl implements AccountRepository {
         if (account.getId() == null) {
             Long accountId = db.getAccountId();
             account.setId(accountId);
+            db.setAccountId(accountId + 1);
             db.getAccounts().add(account);
         } else {
             db.getAccounts().stream()
                     .filter(ac -> ac.getId().equals(account.getId()))
                     .findFirst().ifPresent(ac -> {
-                db.getAccounts().remove(ac);
-                db.getAccounts().add(account);
-            });
+                        db.getAccounts().remove(ac);
+                        db.getAccounts().add(account);
+                    });
         }
     }
 

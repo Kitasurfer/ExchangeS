@@ -1,12 +1,19 @@
 package com.exchangepoint.model;
 
 
+import java.util.Date;
 
 public class Account {
     private Long id;             // Уникальный идентификатор счета
     private Currency currency;   // Валюта счета
     private double balance;      // Баланс счета
     private Long userId;         // ID пользователя, владельца счета
+
+    private Date creationDate;
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
 
     public Account() {
     }
@@ -22,6 +29,12 @@ public class Account {
         this.currency = currency;
         this.balance = 0;
         this.userId = userId;
+        this.creationDate = new Date(); // Устанавливаем текущую дату как дату создания
+    }
+
+
+    public static long getId(Object value) {
+        return 0;
     }
 
     public Long getId() { return id; }
@@ -45,4 +58,6 @@ public class Account {
                 ", userId=" + userId +
                 '}';
     }
+
+
 }

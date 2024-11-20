@@ -1,6 +1,5 @@
 package com.exchangepoint.model;
 
-
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -12,19 +11,7 @@ public class Transaction {
     private double balanceAfter;       // Баланс на счете после операции
     private long userId;               // ID пользователя
 
-    public Transaction() {
-    }
-
-    public Transaction(Long id, LocalDateTime timestamp, String type, Currency currency, double amount, double balanceAfter, long userId) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.type = type;
-        this.currency = currency;
-        this.amount = amount;
-        this.balanceAfter = balanceAfter;
-        this.userId = userId;
-    }
-
+    // Конструктор
     public Transaction(LocalDateTime timestamp, String type, Currency currency, double amount, double balanceAfter, long userId) {
         this.timestamp = timestamp;
         this.type = type;
@@ -35,24 +22,59 @@ public class Transaction {
     }
 
     // Геттеры и сеттеры
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
 
-    public Currency getCurrency() { return currency; }
-    public void setCurrency(Currency currency) { this.currency = currency; }
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 
-    public double getAmount() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
+    public String getType() {
+        return type;
+    }
 
-    public double getBalanceAfter() { return balanceAfter; }
-    public void setBalanceAfter(double balanceAfter) { this.balanceAfter = balanceAfter; }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    public long getUserId() { return userId; }
-    public void setUserId(long userId) { this.userId = userId; }
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getBalanceAfter() {
+        return balanceAfter;
+    }
+
+    public void setBalanceAfter(double balanceAfter) {
+        this.balanceAfter = balanceAfter;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 }

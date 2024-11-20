@@ -14,6 +14,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
         this.db = db;
     }
 
+
+  @Override
+    public List<Transaction> findAll() {
+        // Пример: возвращает список всех транзакций
+        return db.getAllTransactions(); // замените на вашу логику
+    }
+
     @Override
     public void save(Transaction transaction) {
         // Получение нового ID транзакции и установка его для новой транзакции
@@ -39,5 +46,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public List<Transaction> findByUserId(long userId) {
         return db.getUserTransactions()
                 .getOrDefault(userId, new ArrayList<>());
+    }
+
+    @Override
+    public List<Transaction> findByAccountId(long userId) {
+        return List.of();
     }
 }
