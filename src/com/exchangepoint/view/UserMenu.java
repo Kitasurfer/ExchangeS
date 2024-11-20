@@ -9,6 +9,7 @@ import com.exchangepoint.model.User;
 import com.exchangepoint.service.AccountService;
 import com.exchangepoint.service.ExchangeService;
 import com.exchangepoint.service.TransactionService;
+import java.time.format.DateTimeFormatter;
 
 import java.util.Scanner;
 
@@ -147,15 +148,13 @@ public class UserMenu {
     }
 
     private void viewTransactions(User user) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         System.out.println("История операций:");
         transactionService.getTransactions(user.getId())
-                .forEach(transaction ->
-                        System.out.println("ID операции: " + transaction.getId() +
-                                ", Тип: " + transaction.getType() +
-                                ", Сумма: " + transaction.getAmount() + " " + transaction.getCurrency() +
-                                ", Баланс после операции: " + transaction.getBalanceAfter() +
-                                ", Дата: " + transaction.getTimestamp()));
+                .forEach(transaction -> {
+                    String formattedDate = transaction.getTimestamp().format(formatter);
+                    System.out.printf("ID операции: %d, Тип: %s, Сумма: %.2f %s, Баланс после операции: %.2f, Дата: %s%n",
+                            transaction.getId(), transaction.getType(), transaction.getAmount(), transaction.getCurrency(), transaction.getBalanceAfter(), formattedDate);
+                });
     }
-
-
 }

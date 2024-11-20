@@ -22,4 +22,9 @@ public interface AdminService {
     User findUserById(Long userId) throws UserNotFoundException;
     void deleteUserById(Long userId) throws UserNotFoundException;
     void updateUser(User user) throws UserNotFoundException;
+
+    // Новые методы для работы с аккаунтами
+    void addAccount(Account account);
+    void deleteAccount(Long accountId) throws AccountNotFoundException;
+    Account findAccountById(Long accountId) throws AccountNotFoundException;
 }

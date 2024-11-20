@@ -52,8 +52,20 @@ public class Db {
         map.put("ETH-EUR", new Rate(1 / 0.00035));
         map.put("BTC-ETH", new Rate(14.0));
         map.put("ETH-BTC", new Rate(1 / 14.0));
+        map.put("EUR-GBP", new Rate(0.85));
+        map.put("GBP-EUR", new Rate(1 / 0.85));
+        map.put("EUR-CHF", new Rate(1.08));
+        map.put("CHF-EUR", new Rate(1 / 1.08));
+        map.put("EUR-NOK", new Rate(10.00));
+        map.put("NOK-EUR", new Rate(1 / 10.00));
+        map.put("EUR-SEK", new Rate(10.22));
+        map.put("SEK-EUR", new Rate(1 / 10.22));
+        map.put("EUR-DKK", new Rate(7.44));
+        map.put("DKK-EUR", new Rate(1 / 7.44));
+
         return map;
     }
+
 
     // Дополнительные методы для доступа к rateMap
     public Rate getRate(String currencyPair) {
@@ -127,6 +139,8 @@ public class Db {
     public List<Transaction> getAllTransactions() {
         return null;
     }
+
+
 }
 
 
