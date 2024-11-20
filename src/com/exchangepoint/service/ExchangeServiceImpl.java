@@ -12,6 +12,7 @@ public class ExchangeServiceImpl implements ExchangeService {
     private final AccountRepository accountRepository;
     private final ExchangeRateRepository exchangeRateRepository;
     private final TransactionService transactionService;
+    private final double COMMISSION_RATE = 0.002; // Комиссия 0.2%
 
     public ExchangeServiceImpl(AccountRepository accountRepository,
                                ExchangeRateRepository exchangeRateRepository,
@@ -46,14 +47,16 @@ public class ExchangeServiceImpl implements ExchangeService {
             throw new AccountException("Недостаточно средств для обмена.");
         }
 
+        double commission = amount * COMMISSION_RATE;
         double rate = getExchangeRate(fromAccount.getCurrency(), toAccount.getCurrency());
         double convertedAmount = amount * rate;
 
-        fromAccount.setBalance(fromAccount.getBalance() - amount);
+        fromAccount.setBalance(fromAccount.getBalance() - amount - commission);
         toAccount.setBalance(toAccount.getBalance() + convertedAmount);
 
         accountRepository.save(toAccount);
         accountRepository.save(fromAccount);
+
         // Регистрируем транзакцию обмена
         transactionService.recordExchange(fromAccount, toAccount, amount, convertedAmount, rate);
     }

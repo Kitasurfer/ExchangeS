@@ -1,5 +1,6 @@
 package com.exchangepoint.service;
 
+import com.exchangepoint.exception.AccountNotFoundException;
 import com.exchangepoint.exception.UserNotFoundException;
 import com.exchangepoint.model.Account;
 import com.exchangepoint.model.Currency;
@@ -97,4 +98,24 @@ public class AdminServiceImpl implements AdminService {
         }
         db.getUsers().put(user.getId(), user);
     }
+
+    @Override
+    public void addAccount(Account account) {
+        db.getAccounts().add(account);
+    }
+
+    @Override
+    public void deleteAccount(Long accountId) throws AccountNotFoundException {
+        Account account = findAccountById(accountId);
+        db.getAccounts().remove(account);
+    }
+
+    @Override
+    public Account findAccountById(Long accountId) throws AccountNotFoundException {
+        return db.getAccounts().stream()
+                .filter(acc -> acc.getId().equals(accountId))
+                .findFirst()
+                .orElseThrow(() -> new AccountNotFoundException("Счет не найден."));
+    }
 }
+

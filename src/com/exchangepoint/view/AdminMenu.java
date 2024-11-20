@@ -1,11 +1,11 @@
 package com.exchangepoint.view;
 
-import com.exchangepoint.exception.UserNotFoundException;
-import com.exchangepoint.model.Role;
-import com.exchangepoint.model.User;
-import com.exchangepoint.model.Currency;
+import com.exchangepoint.model.*;
 import com.exchangepoint.service.AdminService;
-
+import com.exchangepoint.exception.AccountNotFoundException;
+import com.exchangepoint.exception.UserNotFoundException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,7 +29,11 @@ public class AdminMenu {
             System.out.println("5. Удалить пользователя");
             System.out.println("6. Обновить пользователя");
             System.out.println("7. Просмотреть всех пользователей");
-            System.out.println("8. Выйти");
+            System.out.println("8. Просмотреть все транзакции пользователя");
+            System.out.println("9. Просмотреть все счета пользователя");
+            System.out.println("10. Добавить новый счет для пользователя");
+            System.out.println("11. Удалить счет пользователя");
+            System.out.println("12. Выйти");
             System.out.print("Выберите действие: ");
 
             String choice = scanner.nextLine();
@@ -57,6 +61,18 @@ public class AdminMenu {
                     getAllUsers();
                     break;
                 case "8":
+                    getUserTransactions();
+                    break;
+                case "9":
+                    getUserAccounts();
+                    break;
+                case "10":
+                    addUserAccount();
+                    break;
+                case "11":
+                    deleteUserAccount();
+                    break;
+                case "12":
                     return;
                 default:
                     System.out.println("Неверный выбор. Попробуйте снова.");
@@ -157,6 +173,49 @@ public class AdminMenu {
         }
     }
 
+    private void getUserTransactions() {
+        System.out.print("Введите ID пользователя для просмотра транзакций: ");
+        long userId = Long.parseLong(scanner.nextLine());
+        List<Transaction> transactions = adminService.getUserTransactions(userId);
+        showUserTransactions(transactions);
+    }
 
+    private void showUserTransactions(List<Transaction> transactions) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        System.out.println("История операций:");
+        for (Transaction transaction : transactions) {
+            String formattedDate = transaction.getTimestamp().format(formatter);
+            System.out.printf("ID операции: %d, Тип: %s, Сумма: %.2f %s, Баланс после операции: %.2f, Дата: %s%n",
+                    transaction.getId(), transaction.getType(), transaction.getAmount(), transaction.getCurrency(), transaction.getBalanceAfter(), formattedDate);
+        }
+    }
+
+    private void getUserAccounts() {
+        System.out.print("Введите ID пользователя для просмотра счетов: ");
+        long userId = Long.parseLong(scanner.nextLine());
+        List<Account> accounts = adminService.getUserAccounts(userId);
+        accounts.forEach(System.out::println);
+    }
+
+    private void addUserAccount() {
+        System.out.print("Введите ID пользователя для добавления нового счета: ");
+        long userId = Long.parseLong(scanner.nextLine());
+        System.out.print("Введите валюту нового счета: ");
+        String currencyStr = scanner.nextLine();
+        Currency currency = Currency.valueOf(currencyStr.toUpperCase());
+        Account account = new Account(currency, userId);
+        adminService.addAccount(account);
+        System.out.println("Счет успешно добавлен.");
+    }
+
+    private void deleteUserAccount() {
+        System.out.print("Введите ID счета для удаления: ");
+        long accountId = Long.parseLong(scanner.nextLine());
+        try {
+            adminService.deleteAccount(accountId);
+            System.out.println("Счет успешно удален.");
+        } catch (AccountNotFoundException e) {
+            System.out.println("Счет не найден. Ошибка: " + e.getMessage());
+        }
+    }
 }
-
