@@ -159,5 +159,6 @@ public class UserMenu {
                     System.out.printf(messages.get("transaction.details"),
                             transaction.getId(), transaction.getType(), transaction.getAmount(), transaction.getCurrency(), transaction.getBalanceAfter(), formattedDate);
                 });
+
     }
 }

@@ -42,6 +42,8 @@ public class Main {
 
         // Запуск приложения
         mainMenu.show();
+
+
     }
 }
 
