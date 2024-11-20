@@ -27,4 +27,5 @@ public interface AdminService {
     void addAccount(Account account);
     void deleteAccount(Long accountId) throws AccountNotFoundException;
     Account findAccountById(Long accountId) throws AccountNotFoundException;
+
 }
