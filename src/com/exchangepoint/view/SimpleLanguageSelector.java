@@ -194,12 +194,10 @@ public class SimpleLanguageSelector {
         germanTexts.put("login.success", "Anmeldung erfolgreich!");
         germanTexts.put("login.error", "Anmeldefehler: ");
 
-
         // Добавление мапов в общую мапу языков
         languages.put(1, englishTexts);
         languages.put(2, russianTexts);
         languages.put(3, germanTexts);
-
 
         }
     }
