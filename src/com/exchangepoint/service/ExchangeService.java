@@ -9,4 +9,5 @@ public interface ExchangeService {
     void exchange(long fromAccountId, long toAccountId, double amount) throws AccountException;
     Currency getFromCurrency(long accountId) throws AccountException;
     Currency getToCurrency(long accountId) throws AccountException;
+
 }

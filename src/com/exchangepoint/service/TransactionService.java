@@ -16,5 +16,4 @@ public interface TransactionService {
 
     Iterable<Transaction> getTransactions();
 
-
 }

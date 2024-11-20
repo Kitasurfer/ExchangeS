@@ -15,4 +15,5 @@ public interface AccountService {
     Account getAccountByUserId(long userId, Currency currency) throws AccountException;
     Account getLatestAccountByUserId(long userId) throws AccountException;
     Account getLatestAccountByUserId(long userId, Currency currency) throws AccountException;
+
 }
