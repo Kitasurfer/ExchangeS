@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 public class User {
-    private Long id;             // Уникальный идентификатор пользователя
-    private String name;         // Имя пользователя
-    private String email;        // Email пользователя
-    private String password;     // Пароль пользователя
-    private Set<Role> roles;     // Роли пользователя (USER или ADMIN)
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+    private Set<Role> roles;
     private List<Account> accounts;
-    private boolean isBlocked;   // Флаг блокировки
+    private boolean isBlocked;
 
     public User() {
     }
@@ -32,9 +32,9 @@ public class User {
         this.password = password;
         this.accounts = new ArrayList<>();
         this.isBlocked = false;
+        this.roles = Set.of(Role.USER); // Установка роли по умолчанию при создании пользователя
     }
 
-    // Добавляем недостающий конструктор с установкой роли пользователя
     public User(Long id, String name, String email, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
