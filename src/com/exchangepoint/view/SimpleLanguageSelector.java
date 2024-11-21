@@ -70,7 +70,9 @@ public class SimpleLanguageSelector {
         englishTexts.put("registration.error", "Registration error: ");
         englishTexts.put("login.success", "Login successful!");
         englishTexts.put("login.error", "Login error: ");
-
+        englishTexts.put("enter.exchange.from.currency", "Enter the currency to exchange from: ");
+        englishTexts.put("enter.exchange.to.currency", "Enter the currency to exchange to: ");
+        englishTexts.put("account.not.found", "Account not found for the specified currency.");
         englishTexts.put("transaction.details", "Transaction ID: %d, Type: %s, Amount: %.2f %s, Balance after: %.2f, Date: %s%n");
 
 
@@ -136,6 +138,9 @@ public class SimpleLanguageSelector {
         russianTexts.put("registration.error", "Ошибка регистрации: ");
         russianTexts.put("login.success", "Вход выполнен!");
         russianTexts.put("login.error", "Ошибка входа: ");
+        russianTexts.put("enter.exchange.from.currency", "Введите валюту для обмена: ");
+        russianTexts.put("enter.exchange.to.currency", "Введите валюту для зачисления: ");
+        russianTexts.put("account.not.found", "Счет для указанной валюты не найден.");
         russianTexts.put("transaction.details", "ID операции: %d, Тип: %s, Сумма: %.2f %s, Баланс после операции: %.2f, Дата: %s%n");
 
 
@@ -201,6 +206,9 @@ public class SimpleLanguageSelector {
         germanTexts.put("registration.error", "Registrierungsfehler: ");
         germanTexts.put("login.success", "Anmeldung erfolgreich!");
         germanTexts.put("login.error", "Anmeldefehler: ");
+        germanTexts.put("enter.exchange.from.currency", "Geben Sie die Währung zum Austausch ein: ");
+        germanTexts.put("enter.exchange.to.currency", "Geben Sie die Währung für die Gutschrift ein: ");
+        germanTexts.put("account.not.found", "Konto für die angegebene Währung nicht gefunden.");
         germanTexts.put("transaction.details", "Transaktions-ID: %d, Typ: %s, Betrag: %.2f %s, Kontostand nach: %.2f, Datum: %s%n");
 
 
