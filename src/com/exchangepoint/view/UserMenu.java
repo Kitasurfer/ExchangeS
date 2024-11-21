@@ -127,24 +127,36 @@ public class UserMenu {
 
     private void exchange(User user) {
         try {
-            System.out.print(messages.get("enter.exchange.from"));
-            long fromAccountId = Long.parseLong(scanner.nextLine());
-            System.out.print(messages.get("enter.exchange.to"));
-            long toAccountId = Long.parseLong(scanner.nextLine());
+            System.out.print(messages.get("enter.exchange.from.currency"));
+            String fromCurrencyStr = scanner.nextLine().toUpperCase();
+            System.out.print(messages.get("enter.exchange.to.currency"));
+            String toCurrencyStr = scanner.nextLine().toUpperCase();
             System.out.print(messages.get("enter.exchange.amount"));
             double amount = Double.parseDouble(scanner.nextLine());
 
-            exchangeService.exchange(fromAccountId, toAccountId, amount);
-            Account fromAccount = accountService.getAccountByUserId(user.getId(), exchangeService.getFromCurrency(fromAccountId));
-            Account toAccount = accountService.getAccountByUserId(user.getId(), exchangeService.getToCurrency(toAccountId));
+            Currency fromCurrency = Currency.valueOf(fromCurrencyStr);
+            Currency toCurrency = Currency.valueOf(toCurrencyStr);
+
+            // Найти аккаунты пользователя с соответствующими валютами
+            Account fromAccount = accountService.getAccountByUserId(user.getId(), fromCurrency);
+            Account toAccount = accountService.getAccountByUserId(user.getId(), toCurrency);
+
+            // Выполнить обмен
+            exchangeService.exchange(fromAccount.getId(), toAccount.getId(), amount);
+
+            // Обновленные аккаунты
+            fromAccount = accountService.getAccountByUserId(user.getId(), fromCurrency);
+            toAccount = accountService.getAccountByUserId(user.getId(), toCurrency);
+
             System.out.println(messages.get("exchange.success"));
             System.out.println(messages.get("exchange.fee") + " " + amount * 0.002 + " " + fromAccount.getCurrency());
             System.out.println(messages.get("exchange.from.account") + " " + fromAccount);
             System.out.println(messages.get("exchange.to.account") + " " + toAccount);
+
         } catch (NumberFormatException e) {
             System.out.println(messages.get("invalid.amount"));
         } catch (IllegalArgumentException e) {
-            System.out.println(messages.get("invalid.account.id"));
+            System.out.println(messages.get("invalid.currency"));
         } catch (AccountException e) {
             System.out.println(e.getMessage());
         }
@@ -153,15 +165,15 @@ public class UserMenu {
     private void viewTransactions(User user) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         System.out.println(messages.get("transaction.history"));
-        System.out.printf("%-12s %-22s %-15s %-20s %-20s %-20s%n", "ID операции",   "Тип", "Сумма", "Валюта", "Баланс после",  "Дата");
+        System.out.printf("%-15s %-20s %-15s %-20s %-20s %-20s%n", "ID операции", "Тип", "Сумма", "Валюта", "Баланс после", "Дата");
         System.out.println("=".repeat(115));
         transactionService.getTransactions(user.getId())
                 .forEach(transaction -> {
                     String formattedDate = transaction.getTimestamp().format(formatter);
-                    System.out.printf("%-12s %-22s %-15s %-20s %-20s %-20s%n",
+                    System.out.printf("%-15d %-20s %-15.2f %-20s %-20.2f %-20s%n",
                             transaction.getId(), transaction.getType(), transaction.getAmount(), transaction.getCurrency(), transaction.getBalanceAfter(), formattedDate);
                 });
     }
-
 }
+
 
